@@ -1,0 +1,28 @@
+version: '3.8' 
+
+services:
+  # Backend service
+  backend:
+    build: ./product  
+    ports:
+      - "8080:8080"  
+    environment:
+      # Environment variables for the backend (optional)
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/productsdb  
+
+  # Frontend service
+  frontend:
+    build: ./product-app-frontend  
+    volumes:
+      - ./product-app-frontend:/app  
+    ports:
+      - "3000:3000"  
+
+  # Database service
+  db:
+    image: postgres:latest 
+    environment:
+      POSTGRES_USER: postgres 
+      POSTGRES_PASSWORD: pass123 
+    ports:
+      - "5432:5432"  
